@@ -12,7 +12,14 @@ export class AssetDTOToAsset implements Converter<CreateAssetDTO, Asset> {
         asset.scene = createAssetDTO.scene;
         asset.variant = createAssetDTO.variant;
         asset.camera = createAssetDTO.camera;
+        asset.sort_order = null;
 
         return asset;
+    }
+
+    public getNextSortOrderIndex(assets: Asset[]): number {
+        const arrayOfNumber = assets.map((asset: Asset) => asset.sort_order);
+        const max = Math.max(...arrayOfNumber);
+        return max + 1;
     }
 }

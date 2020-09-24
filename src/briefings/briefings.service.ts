@@ -34,7 +34,7 @@ export class BriefingsService {
 
     async createBriefing(createBriefingDTO: CreateBriefingDTO): Promise<Briefing> {
 
-        const foundBriefing = this.briefingRepository.findOne(createBriefingDTO.id, { relations: ["assets"] });
+        const foundBriefing = await this.briefingRepository.findOne(createBriefingDTO.id, { relations: ["assets"] });
 
         if (foundBriefing) {
             throw new UniqueContraintException('Briefing UUID already exists', HttpStatus.BAD_REQUEST);
@@ -47,11 +47,32 @@ export class BriefingsService {
 
     async addAssetToBriefing(briefingId: string, createAssetDTO: CreateAssetDTO) {
         const briefing = await this.getBriefingById(briefingId);
+
+        this.validateAsset(briefing, createAssetDTO);
+
         const asset: Asset = this.assetDTOToAsset.convert(createAssetDTO);
+        const sortOrder = this.assetDTOToAsset.getNextSortOrderIndex(briefing.assets);
+        asset.sort_order = sortOrder
+
         briefing.assets.push(asset);
 
         this.briefingRepository.save(briefing);
 
+    }
+
+    protected validateAsset(briefing: Briefing, createAssetDTO: CreateAssetDTO): void {
+        // validate uniqueness of attributes
+        const match = briefing.assets.find((asset: Asset) => {
+            if (createAssetDTO.scene === asset.scene &&
+                createAssetDTO.variant === asset.variant &&
+                createAssetDTO.camera === asset.camera) {
+                return asset;
+            }
+        })
+
+        if (match) {
+            throw new UniqueContraintException('Combination of Scene, Variant and Camera must be unique', HttpStatus.BAD_REQUEST);
+        }
     }
 
 
