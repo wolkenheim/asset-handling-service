@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres:12.4-alpine
+    ports:
+      - "5432:5432"
+      # volumes:
+      # - ../db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=my-database
+      - POSTGRES_USER=my-database-user
+      - POSTGRES_PASSWORD=change-me

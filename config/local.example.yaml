@@ -1,0 +1,12 @@
+server:
+  port: 3000
+
+stage: local
+
+db:
+  type: postgres
+  host: localhost
+  port: 5432
+  database: 'my-database'
+  username: 'my-database-user'
+  password: 'change-me'
