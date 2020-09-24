@@ -45,7 +45,7 @@ export class BriefingsService {
         return this.briefingRepository.createBriefingWithAssets(briefing);
     }
 
-    async addAssetToBriefing(briefingId: string, createAssetDTO: CreateAssetDTO) {
+    async addAssetToBriefing(briefingId: string, createAssetDTO: CreateAssetDTO): Promise<Asset> {
         const briefing = await this.getBriefingById(briefingId);
 
         this.validateAsset(briefing, createAssetDTO);
@@ -56,8 +56,14 @@ export class BriefingsService {
 
         briefing.assets.push(asset);
 
-        this.briefingRepository.save(briefing);
+        await this.briefingRepository.save(briefing);
 
+        return asset;
+
+    }
+
+    async deleteAsset(briefingId: string, assetId: string): Promise<void> {
+        return this.briefingRepository.deleteAsset(assetId);
     }
 
     protected validateAsset(briefing: Briefing, createAssetDTO: CreateAssetDTO): void {

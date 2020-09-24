@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BriefingsService } from './briefings.service';
 import { CreateAssetDTO } from './dto/create-asset-dto';
 import { CreateBriefingDTO } from './dto/create-briefing-dto';
+import { Asset } from './entity/asset.entity';
 import { Briefing } from './entity/briefing.entity';
 
 @Controller('briefing')
@@ -25,10 +26,18 @@ export class BriefingsController {
         return await this.briefingsService.createBriefing(createBriefingDTO);
     }
 
-    @Post('/:id/add-asset')
+    @Post('/:briefingId/add-asset')
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
-    async addAssetToBriefing(@Param('id') briefingId: string, @Body() createAssetDTO: CreateAssetDTO) {
-        await this.briefingsService.addAssetToBriefing(briefingId, createAssetDTO);
+    async addAssetToBriefing(@Param('briefingId') briefingId: string, @Body() createAssetDTO: CreateAssetDTO): Promise<Asset> {
+        return await this.briefingsService.addAssetToBriefing(briefingId, createAssetDTO);
+    }
+
+    @Delete('/:briefingId/delete-asset/:assetId')
+    async deleteAsset(
+        @Param('briefingId') briefingId: string,
+        @Param('assetId') assetId: string,
+    ) {
+        return await this.briefingsService.deleteAsset(briefingId, assetId);
     }
 
 }
