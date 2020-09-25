@@ -1,12 +1,12 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { BriefingRepository } from './briefing.repository';
-import { CreateAssetDTO } from './dto/create-asset-dto';
-import { CreateBriefingDTO } from './dto/create-briefing-dto';
-import { Asset } from './entity/asset.entity';
-import { Briefing } from './entity/briefing.entity';
-import { UniqueContraintException } from './exceptions/unique-contraint.exception';
-import { BriefingDTOToBriefingConverter } from "./converters/briefing-dto-to-briefing";
-import { AssetDTOToAssetConverter } from "./converters/asset-dto-to-asset";
+import { BriefingRepository } from '../briefing.repository';
+import { CreateAssetDTO } from '../dto/create-asset-dto';
+import { CreateBriefingDTO } from '../dto/create-briefing-dto';
+import { Asset } from '../entity/asset.entity';
+import { Briefing } from '../entity/briefing.entity';
+import { UniqueContraintException } from '../exceptions/unique-contraint.exception';
+import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing";
+import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 
 @Injectable()
 export class BriefingsService {

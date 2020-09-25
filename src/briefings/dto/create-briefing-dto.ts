@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsInt, ValidateNested, IsArray, IsUUID } from 'class-validator';
-import { Type } from 'class-transformer';
-import { CreateAssetDTO } from './create-asset-dto';
+
 
 export class CreateBriefingDTO {
 
