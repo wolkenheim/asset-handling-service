@@ -1,9 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
-export class UploadDTO {
+
+export class CreateUploadDTO {
 
     @IsNotEmpty()
-    file_name: string;
+    fileName: string;
 
     @IsNotEmpty()
-    hashed_name: string;
+    hashedName: string;
 }

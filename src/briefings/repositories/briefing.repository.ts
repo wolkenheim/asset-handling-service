@@ -1,6 +1,6 @@
-import { Briefing } from "./entity/briefing.entity";
+import { Briefing } from "../entity/briefing.entity";
 import { Repository, EntityRepository } from "typeorm";
-import { Asset } from "./entity/asset.entity";
+import { Asset } from "../entity/asset.entity";
 import { NotFoundException } from "@nestjs/common";
 
 @EntityRepository(Briefing)

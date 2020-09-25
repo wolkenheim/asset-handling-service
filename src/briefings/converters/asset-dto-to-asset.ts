@@ -1,5 +1,5 @@
 import { AssetType } from "../asset-types.enum";
-import { CreateAssetDTO } from "../dto/create-asset-dto";
+import { CreateAssetDTO } from "../dto/create-asset.dto";
 import { Asset } from "../entity/asset.entity";
 import { Converter } from "./converter.interface";
 import { Briefing } from "../entity/briefing.entity";

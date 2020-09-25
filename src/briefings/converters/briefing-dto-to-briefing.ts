@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AssetType } from "../asset-types.enum";
-import { CreateBriefingDTO } from "../dto/create-briefing-dto";
+import { CreateBriefingDTO } from "../dto/create-briefing.dto";
 import { Asset } from "../entity/asset.entity";
 import { Briefing } from "../entity/briefing.entity";
 import { Converter } from "./converter.interface";
