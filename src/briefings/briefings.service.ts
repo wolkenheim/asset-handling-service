@@ -1,13 +1,12 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { AssetType } from './asset-types.enum';
 import { BriefingRepository } from './briefing.repository';
-import { AssetDTOToAsset } from './converters/asset-dto-to-asset';
-import { BriefingDTOToBriefingConverter } from './converters/briefing-dto-to-briefing';
 import { CreateAssetDTO } from './dto/create-asset-dto';
 import { CreateBriefingDTO } from './dto/create-briefing-dto';
 import { Asset } from './entity/asset.entity';
 import { Briefing } from './entity/briefing.entity';
 import { UniqueContraintException } from './exceptions/unique-contraint.exception';
+import { BriefingDTOToBriefingConverter } from "./converters/briefing-dto-to-briefing";
+import { AssetDTOToAssetConverter } from "./converters/asset-dto-to-asset";
 
 @Injectable()
 export class BriefingsService {
@@ -15,7 +14,7 @@ export class BriefingsService {
     constructor(
         private readonly briefingRepository: BriefingRepository,
         private readonly briefingDTOToBriefingConverter: BriefingDTOToBriefingConverter,
-        private readonly assetDTOToAsset: AssetDTOToAsset
+        private readonly assetDTOToAssetConverter: AssetDTOToAssetConverter
     ) { }
 
     async getAllBriefings(): Promise<Briefing[]> {
@@ -50,16 +49,12 @@ export class BriefingsService {
 
         this.validateAsset(briefing, createAssetDTO);
 
-        const asset: Asset = this.assetDTOToAsset.convert(createAssetDTO);
-        const sortOrder = this.assetDTOToAsset.getNextSortOrderIndex(briefing.assets);
-        asset.sort_order = sortOrder
-
+        const asset = this.assetDTOToAssetConverter.convertWithSortOrder(briefing, createAssetDTO);
         briefing.assets.push(asset);
 
         await this.briefingRepository.save(briefing);
 
         return asset;
-
     }
 
     async deleteAsset(briefingId: string, assetId: string): Promise<void> {

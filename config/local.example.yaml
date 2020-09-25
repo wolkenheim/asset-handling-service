@@ -10,3 +10,8 @@ db:
   database: 'my-database'
   username: 'my-database-user'
   password: 'change-me'
+
+S3:
+  AWS_BUCKET: name-of-your-bucket
+
+token: simple-token
