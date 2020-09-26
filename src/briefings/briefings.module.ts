@@ -9,15 +9,24 @@ import { AssetUploadsController } from './controllers/asset-uploads.controller';
 import { BriefingsApiController } from './controllers/briefings.api.controller';
 import { TokenMiddleware } from './middlewares/token.middleware';
 import { UploadsService } from './services/uploads.service';
-import { Upload } from './entity/upload.entity';
 import { AssetRepository } from './repositories/asset.repository';
+import { FileServiceS3 } from './services/file.service.s3';
+import { UploadDTOToUploadConverter } from './converters/upload-dto-to-upload';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([BriefingRepository, AssetRepository]),
   ],
   controllers: [BriefingsController, AssetUploadsController, BriefingsApiController],
-  providers: [BriefingsService, UploadsService, BriefingDTOToBriefingConverter, AssetDTOToAssetConverter]
+  providers: [
+    BriefingsService,
+    UploadsService,
+    BriefingDTOToBriefingConverter,
+    AssetDTOToAssetConverter,
+    UploadDTOToUploadConverter,
+    FileServiceS3,
+    UploadsService
+  ]
 })
 export class BriefingsModule {
   configure(consumer: MiddlewareConsumer) {

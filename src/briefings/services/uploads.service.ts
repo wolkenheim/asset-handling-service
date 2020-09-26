@@ -1,32 +1,30 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { UploadDTOToUploadConverter } from '../converters/upload-dto-to-upload';
 
-import * as config from 'config';
 import { CreateUploadDTO } from '../dto/create-upload.dto';
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3({ region: 'eu-central-1' });
+import { AssetRepository } from '../repositories/asset.repository';
+import { FileService } from './file.service.interface';
+import { FileServiceS3 } from './file.service.s3';
+
 
 @Injectable()
 export class UploadsService {
 
-    async addUploadToAsset(createUploadDTO: CreateUploadDTO,) {
-        await this.validateFileExists(createUploadDTO.hashedName);
-    }
+    constructor(
+        private readonly fileService: FileServiceS3,
+        private readonly assetRepository: AssetRepository,
+        private readonly uploadDTOToUploadConverter: UploadDTOToUploadConverter,
+    ) { }
 
-    async validateFileExists(fileName: string): Promise<boolean> {
+    async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string) {
+        //await this.fileService.validateFileExists(createUploadDTO.hashedName);
 
-        let params = {
-            Bucket: config.S3.AWS_BUCKET,
-            Key: fileName //'006581bf-47d4-404a-b681-796c878cc631.pdf' 
-        };
+        const upload = this.uploadDTOToUploadConverter.convert(createUploadDTO);
 
-        try {
-            const headCode = await s3.headObject(params).promise();
-            //const signedUrl = s3.getSignedUrl('getObject', params);
-            return true;
-        } catch (headErr) {
-            if (headErr.code === 'NotFound') {
-                throw new NotFoundException("File not found on S3");
-            }
-        }
+        const asset = await this.assetRepository.findOne(assetId);
+        asset.uploads.push(upload);
+
+        return await this.assetRepository.save(asset);
+
     }
 }

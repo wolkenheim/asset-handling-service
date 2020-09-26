@@ -22,7 +22,7 @@ export class BriefingsService {
     }
 
     async getBriefingById(id: string): Promise<Briefing> {
-        const foundBriefing = this.briefingRepository.findOne(id, { relations: ["assets"] });
+        const foundBriefing = this.briefingRepository.findOne(id, { relations: ["assets.uploads"] });
 
         if (!foundBriefing) {
             throw new NotFoundException();
