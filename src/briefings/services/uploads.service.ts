@@ -17,6 +17,7 @@ export class UploadsService {
     ) { }
 
     async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string) {
+        // @todo: enable validation
         //await this.fileService.validateFileExists(createUploadDTO.hashedName);
 
         const upload = this.uploadDTOToUploadConverter.convert(createUploadDTO);
