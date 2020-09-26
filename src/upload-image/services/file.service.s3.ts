@@ -1,8 +1,7 @@
 import { NotFoundException, Injectable } from '@nestjs/common';
 import * as config from 'config';
 import { FileService } from './file.service.interface';
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3({ region: 'eu-central-1' });
+import { s3 } from '../s3-client';
 
 @Injectable()
 export class FileServiceS3 implements FileService {
