@@ -1,5 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn } from "typeorm";
-import { AssetType } from "../asset-types.enum";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, AfterLoad } from "typeorm";
+import { AssetType } from "./asset-type.enum";
+import { AssetExtension } from "./asset-extension.enum";
 import { Briefing } from "./briefing.entity";
 import { Upload } from "./upload.entity";
 
@@ -11,6 +12,9 @@ export class Asset {
 
     @Column()
     type: AssetType
+
+    @Column({ default: AssetExtension.JPG })
+    extension: AssetExtension
 
     @Column()
     scene: number;
@@ -29,4 +33,10 @@ export class Asset {
 
     @OneToMany(type => Upload, upload => upload.asset, { cascade: true, eager: true })
     uploads: Upload[]
+
+    protected fullPath: string
+
+    setFullPath(fullPath: string) {
+        this.fullPath = fullPath;
+    }
 }

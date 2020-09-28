@@ -1,16 +1,38 @@
-import { IsNotEmpty, IsInt, ValidateNested, IsArray, IsUUID } from 'class-validator';
-
+import { IsNotEmpty, IsInt, ValidateNested, IsArray, IsUUID, IsDateString } from 'class-validator';
 
 export class CreateBriefingDTO {
 
     @IsUUID()
     id: string;
 
-    @IsInt()
-    scene: number;
+    @IsNotEmpty()
+    content_piece_id: string
+
+    @IsNotEmpty()
+    briefing_type: string
+
+    @IsNotEmpty()
+    team: string
+
+    @IsNotEmpty()
+    description: string
 
     @IsNotEmpty()
     jira_ticket_title: string
+
+    @IsDateString()
+    deadline: Date
+
+    @IsDateString()
+    briefing_date: Date
+
+    @IsInt()
+    kw: number
+
+    camera: string
+
+    @IsInt()
+    scene: number;
 
 }
 

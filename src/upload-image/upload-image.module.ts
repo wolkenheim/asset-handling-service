@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { UploadProcessor } from './upload.processor';
 import { BullModule } from '@nestjs/bull';
 import { FileServiceS3 } from './services/file.service.s3';
 
 @Module({
     imports: [
+        HttpModule,
         BullModule.registerQueue({
             name: 'image',
             redis: {

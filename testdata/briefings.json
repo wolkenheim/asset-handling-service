@@ -1,0 +1,15 @@
+[
+    {
+        "id": "d2d730ef-dee6-40b8-918d-6252f17b34be",
+        "content_piece_id": "7c46bf4a-dd56-4f93-b950-ebd7767953e8",
+        "briefing_type" : "App\\Models\\BriefingRendering",
+        "team" : "YDI",
+        "description": "\u00c4hnlich wie Szene 1 bis auf\n\nFarbe: pastellt\u00f6ne",
+        "jira_ticket_title" : "J123456_image_name",
+        "deadline": "2020-03-22 00:00:00",
+        "briefing_date" : "2020-03-22 00:00:00",
+        "kw" : 50,
+        "camera" : ["oben", "links"],
+        "scene": 1
+    }
+]

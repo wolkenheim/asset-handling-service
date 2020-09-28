@@ -49,7 +49,7 @@ export class BriefingsService {
 
         this.validateAsset(briefing, createAssetDTO);
 
-        const asset = this.assetDTOToAssetConverter.convertWithSortOrder(briefing, createAssetDTO);
+        const asset = this.assetDTOToAssetConverter.convertWithAdditionalAttributes(briefing, createAssetDTO);
         briefing.assets.push(asset);
 
         await this.briefingRepository.save(briefing);

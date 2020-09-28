@@ -9,11 +9,9 @@ import { UploadImageModule } from './upload-image/upload-image.module';
 
 @Module({
   imports: [
-
     TypeOrmModule.forRoot(typeOrmConfig),
     TerminusModule,
-    BriefingsModule,
-    UploadImageModule
+    BriefingsModule
   ],
   controllers: [HealthController],
 })

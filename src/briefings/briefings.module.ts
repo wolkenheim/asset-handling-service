@@ -13,6 +13,7 @@ import { AssetRepository } from './repositories/asset.repository';
 import { UploadDTOToUploadConverter } from './converters/upload-dto-to-upload';
 import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
+import { TestdataService } from './services/testdata.service';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { UploadImageModule } from 'src/upload-image/upload-image.module';
     BriefingDTOToBriefingConverter,
     AssetDTOToAssetConverter,
     UploadDTOToUploadConverter,
-    UploadsService
+    UploadsService,
+    TestdataService
   ]
 })
 export class BriefingsModule {
