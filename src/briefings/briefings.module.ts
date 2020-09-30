@@ -14,6 +14,7 @@ import { UploadDTOToUploadConverter } from './converters/upload-dto-to-upload';
 import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
 import { TestdataService } from './services/testdata.service';
+import { UploadRepository } from './repositories/upload.repository';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { TestdataService } from './services/testdata.service';
     BullModule.registerQueue({
       name: 'image',
     }),
-    TypeOrmModule.forFeature([BriefingRepository, AssetRepository]),
+    TypeOrmModule.forFeature([BriefingRepository, AssetRepository, UploadRepository]),
   ],
   controllers: [BriefingsController, AssetUploadsController, BriefingsApiController],
   providers: [

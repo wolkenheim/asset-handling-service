@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Post, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BriefingsService } from '../services/briefings.service';
 import { CreateAssetDTO } from '../dto/create-asset.dto';
 import { CreateBriefingDTO } from '../dto/create-briefing.dto';

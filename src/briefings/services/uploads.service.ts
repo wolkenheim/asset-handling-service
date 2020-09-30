@@ -7,6 +7,10 @@ import { Queue } from 'bull';
 import { setQueues } from 'bull-board';
 import { FileServiceS3 } from 'src/upload-image/services/file.service.s3';
 import { QueueNames } from 'src/upload-image/queue-names.enum';
+import { FileUploadService } from 'src/upload-image/services/file-upload.service';
+import { Upload } from '../entity/upload.entity';
+import { Asset } from '../entity/asset.entity';
+
 
 @Injectable()
 export class UploadsService {
@@ -16,15 +20,12 @@ export class UploadsService {
         private readonly fileService: FileServiceS3,
         private readonly assetRepository: AssetRepository,
         private readonly uploadDTOToUploadConverter: UploadDTOToUploadConverter,
+        private readonly fileUploadService: FileUploadService
     ) {
         this.registerQueuesIntoBullBoard();
     }
 
-    async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string) {
-        // @todo: enable validation
-        //await this.fileService.validateFileExists(createUploadDTO.hashedName);
-
-        const upload = this.uploadDTOToUploadConverter.convert(createUploadDTO);
+    async getAssetById(assetId: string) {
 
         const asset = await this.assetRepository.findOne(assetId);
 
@@ -32,17 +33,45 @@ export class UploadsService {
             throw new NotFoundException("Asset not found");
         }
 
+        return asset;
+    }
+
+    async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string): Promise<Asset> {
+
+        await this.fileService.validateFileExists(createUploadDTO.hashedName);
+
+        let asset = await this.getAssetById(assetId);
+
+        asset = await this.deleteExistingUploads(asset);
+
+        const upload = this.uploadDTOToUploadConverter.convert(createUploadDTO);
         asset.uploads.push(upload);
 
-        let result = await this.assetRepository.save(asset);
+        asset.upload_counter++;
 
+        let savedAsset = await this.assetRepository.save(asset);
 
         await this.imageQueue.add(QueueNames.COPY, upload);
 
-        return result;
-
+        return savedAsset;
     }
 
+    async deleteExistingUploads(asset: Asset): Promise<Asset> {
+        const assetsToDelete = [...asset.uploads];
+
+        if (assetsToDelete.length > 0) {
+            asset.uploads.forEach((upload: Upload) => {
+                // @todo: remove image from s3
+                this.assetRepository.removeUpload(upload);
+            })
+        }
+        asset.uploads = [];
+        return asset;
+    }
+
+    async testS3(): Promise<void> {
+        await this.fileUploadService.uploadToDam();
+    }
 
     private registerQueuesIntoBullBoard() {
         setQueues([

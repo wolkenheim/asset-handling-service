@@ -3,6 +3,7 @@ import { AssetType } from "./asset-type.enum";
 import { AssetExtension } from "./asset-extension.enum";
 import { Briefing } from "./briefing.entity";
 import { Upload } from "./upload.entity";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class Asset {
@@ -27,6 +28,9 @@ export class Asset {
 
     @Column()
     sort_order: number;
+
+    @Column({ default: 1 })
+    upload_counter: number
 
     @ManyToOne(type => Briefing)
     briefing: Briefing
