@@ -3,7 +3,7 @@ import { BriefingsService } from '../services/briefings.service';
 import { CreateBriefingDTO } from '../dto/create-briefing.dto';
 import { Briefing } from '../entity/briefing.entity';
 
-@Controller('api/briefing')
+@Controller('api/v1/briefing')
 export class BriefingsApiController {
 
     constructor(private briefingsService: BriefingsService) { }

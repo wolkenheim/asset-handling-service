@@ -38,9 +38,9 @@ export class Asset {
     @OneToMany(type => Upload, upload => upload.asset, { cascade: true, eager: true })
     uploads: Upload[]
 
-    protected fullPath: string
+    protected file_path: string
 
-    setFullPath(fullPath: string) {
-        this.fullPath = fullPath;
+    setFilePath(filePath: string) {
+        this.file_path = filePath;
     }
 }

@@ -16,6 +16,8 @@ import { UploadImageModule } from 'src/upload-image/upload-image.module';
 import { TestdataService } from './services/testdata.service';
 import { UploadRepository } from './repositories/upload.repository';
 import { PresignedController } from '../presigned/controllers/presigned.controller';
+import { AssetsController } from './controllers/assets.controller';
+import { AssetsService } from './services/assets.service';
 
 @Module({
   imports: [
@@ -25,11 +27,17 @@ import { PresignedController } from '../presigned/controllers/presigned.controll
     }),
     TypeOrmModule.forFeature([BriefingRepository, AssetRepository, UploadRepository]),
   ],
-  controllers: [BriefingsController, AssetUploadsController, BriefingsApiController],
+  controllers: [
+    AssetsController,
+    AssetUploadsController,
+    BriefingsController,
+    BriefingsApiController
+  ],
   providers: [
+    AssetsService,
+    AssetDTOToAssetConverter,
     BriefingsService,
     BriefingDTOToBriefingConverter,
-    AssetDTOToAssetConverter,
     UploadDTOToUploadConverter,
     UploadsService,
     TestdataService,
@@ -39,6 +47,6 @@ export class BriefingsModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(TokenMiddleware)
-      .forRoutes('api');
+      .forRoutes('api/v1');
   }
 }

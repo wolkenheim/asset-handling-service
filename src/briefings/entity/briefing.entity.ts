@@ -52,7 +52,7 @@ export class Briefing {
         let briefing = this;
         this.assets.forEach(asset => {
             let path = briefing.jira_ticket_title + "." + asset.extension;
-            asset.setFullPath(path);
+            asset.setFilePath(path);
         })
     }
 }

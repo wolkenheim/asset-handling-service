@@ -5,7 +5,6 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { BullModule } from '@nestjs/bull';
-import { UploadImageModule } from './upload-image/upload-image.module';
 import { PresignedModule } from './presigned/presigned.module';
 
 @Module({

@@ -27,7 +27,7 @@ export class AssetDTOToAssetConverter implements Converter<CreateAssetDTO, Asset
         const asset: Asset = this.convert(createAssetDTO);
         const sortOrder = this.getNextSortOrderIndex(briefing.assets);
         asset.sort_order = sortOrder;
-        asset.setFullPath(new AssetNameHelper(briefing, asset).buildName())
+        asset.setFilePath(new AssetNameHelper(briefing, asset).buildName())
 
         return asset;
     }

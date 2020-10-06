@@ -7,7 +7,7 @@ export class PresignedController {
 
     constructor(private readonly presignedService: PresignedService) { }
 
-    @Post('upload-url')
+    @Post('api/upload-url')
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
     async getPresignedUrl(@Body() filePath: RequestUrlDTO) {
         return this.presignedService.getPresignedUrl(filePath);
