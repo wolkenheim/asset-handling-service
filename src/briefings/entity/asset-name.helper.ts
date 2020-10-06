@@ -13,7 +13,7 @@ export class AssetNameHelper {
         this.setMethods();
     }
 
-    buildName(): string {
+    buildName(): string | null {
 
         let nameString = "";
 
@@ -30,33 +30,61 @@ export class AssetNameHelper {
         return nameString;
     }
 
-    getOrderYear(): string {
-        return this.briefing.briefing_date.getFullYear().toString();
+    getOrderYear(): string | null {
+        let attribute = this.briefing.briefing_date;
+        if (!attribute) {
+            return null;
+        }
+        return attribute.getFullYear().toString();
     }
 
-    getOrderMonth(): string {
-        return this.briefing.briefing_date.getMonth().toString().padStart(2, '0');
+    getOrderMonth(): string | null {
+        let attribute = this.briefing.briefing_date;
+        if (!attribute) {
+            return null;
+        }
+        return attribute.getMonth().toString().padStart(2, '0');
     }
 
-    getKW(): string {
-        return "KW" + this.briefing.kw.toString().padStart(2, '0');
+    getKW(): string | null {
+        let attribute = this.briefing.kw;
+        if (!attribute) {
+            return null;
+        }
+        return "KW" + attribute.toString().padStart(2, '0');
     }
 
-    getVariation(): string {
-        return "V" + this.asset.variant.toString().padStart(2, '0');
+    getVariation(): string | null {
+        let attribute = this.asset.variant
+        if (!attribute) {
+            return null;
+        }
+        return "V" + attribute.toString().padStart(2, '0');
     }
 
-    getCamera(): string {
-        return "C" + this.asset.camera.toString().padStart(2, '0');
+    getCamera(): string | null {
+        let attribute = this.asset.camera
+        if (!attribute) {
+            return null;
+        }
+        return "C" + attribute.toString().padStart(2, '0');
     }
 
-    getJiraTicketTitle(): string {
+    getJiraTicketTitle(): string | null {
         // @todo: truncate title
-        return this.briefing.jira_ticket_title
+        let attribute = this.briefing.jira_ticket_title
+        if (!attribute) {
+            return null;
+        }
+        return attribute
     }
 
-    getScene(): string {
-        return "Scene_" + this.asset.variant.toString().padStart(2, '0');
+    getScene(): string | null {
+        let attribute = this.asset.scene
+        if (!attribute) {
+            return null;
+        }
+        return "Scene_" + attribute.toString().padStart(2, '0');
     }
 
     setMethods(methods?: string[]): void {
