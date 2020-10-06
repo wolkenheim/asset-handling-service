@@ -25,7 +25,7 @@ export class BriefingsService {
         const foundBriefing = this.briefingRepository.findOne(id, { relations: ["assets.uploads"] });
 
         if (!foundBriefing) {
-            throw new NotFoundException();
+            throw new NotFoundException("Briefing not found");
         }
 
         return foundBriefing;

@@ -44,7 +44,14 @@ export class FileServiceS3 implements FileService {
                 throw new NotFoundException("File not found on S3");
             }
         }
+    }
 
+    async getSignedUrl(fileName: string) {
+        let params = { Bucket: config.S3.AWS_BUCKET, Key: fileName };
+
+        return await s3.getSignedUrlPromise('putObject', params);
 
     }
+
+
 }

@@ -15,6 +15,7 @@ import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
 import { TestdataService } from './services/testdata.service';
 import { UploadRepository } from './repositories/upload.repository';
+import { PresignedController } from '../presigned/controllers/presigned.controller';
 
 @Module({
   imports: [
@@ -27,12 +28,11 @@ import { UploadRepository } from './repositories/upload.repository';
   controllers: [BriefingsController, AssetUploadsController, BriefingsApiController],
   providers: [
     BriefingsService,
-    UploadsService,
     BriefingDTOToBriefingConverter,
     AssetDTOToAssetConverter,
     UploadDTOToUploadConverter,
     UploadsService,
-    TestdataService
+    TestdataService,
   ]
 })
 export class BriefingsModule {

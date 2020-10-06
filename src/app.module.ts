@@ -6,12 +6,14 @@ import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from './upload-image/upload-image.module';
+import { PresignedModule } from './presigned/presigned.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     TerminusModule,
-    BriefingsModule
+    BriefingsModule,
+    PresignedModule
   ],
   controllers: [HealthController],
 })
