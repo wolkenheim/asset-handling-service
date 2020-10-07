@@ -1,5 +1,4 @@
-import { NumberAttributeValue } from "aws-sdk/clients/clouddirectory";
-import { Entity, Column, OneToMany, PrimaryColumn, AfterLoad } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { Asset } from "./asset.entity";
 import { Type } from 'class-transformer';
 

@@ -28,8 +28,7 @@ export class AssetDTOToAssetConverter implements Converter<AssetCreateDTO, Asset
 
         asset.scene = briefing.scene;
         asset.sort_order = this.getNextSortOrderIndex(briefing.assets);
-
-        asset.setFilePath(new AssetNameHelper(briefing, asset).buildName())
+        asset.file_name = new AssetNameHelper(briefing, asset).buildName();
 
         return asset;
     }

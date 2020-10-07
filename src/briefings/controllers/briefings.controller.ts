@@ -1,8 +1,6 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, ParseIntPipe, Post, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BriefingsService } from '../services/briefings.service';
-import { AssetCreateDTO } from '../dto/asset-create.dto';
 import { CreateBriefingDTO } from '../dto/create-briefing.dto';
-import { Asset } from '../entity/asset.entity';
 import { Briefing } from '../entity/briefing.entity';
 
 @Controller('api/briefing')

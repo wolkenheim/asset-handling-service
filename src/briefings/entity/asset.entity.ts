@@ -42,9 +42,16 @@ export class Asset {
     uploads: Upload[]
 
     @Column({ default: null, nullable: true })
+    file_name: string
+
     protected file_path: string
 
     setFilePath(filePath: string) {
         this.file_path = filePath;
+    }
+
+    @AfterLoad()
+    initFilePath() {
+        this.setFilePath(this.file_name + "." + this.extension);
     }
 }
