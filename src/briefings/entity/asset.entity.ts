@@ -41,6 +41,7 @@ export class Asset {
     @OneToMany(type => Upload, upload => upload.asset, { cascade: true, eager: true })
     uploads: Upload[]
 
+    @Column({ default: null, nullable: true })
     protected file_path: string
 
     setFilePath(filePath: string) {

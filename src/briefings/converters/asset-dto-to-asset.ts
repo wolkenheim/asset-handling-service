@@ -36,6 +36,7 @@ export class AssetDTOToAssetConverter implements Converter<AssetCreateDTO, Asset
 
 
     protected getNextSortOrderIndex(assets: Asset[]): number {
+        if (!assets.length) return 1;
         const arrayOfNumber = assets.map((asset: Asset) => asset.sort_order);
         const max = Math.max(...arrayOfNumber);
         return max + 1;

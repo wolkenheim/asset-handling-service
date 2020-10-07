@@ -44,15 +44,4 @@ export class Briefing {
     @OneToMany(type => Asset, asset => asset.briefing, { cascade: true, eager: true })
     assets: Asset[]
 
-    @AfterLoad()
-    initSomething() {
-        if (!this.assets) {
-            return;
-        }
-        let briefing = this;
-        this.assets.forEach(asset => {
-            let path = briefing.jira_ticket_title + "." + asset.extension;
-            asset.setFilePath(path);
-        })
-    }
 }

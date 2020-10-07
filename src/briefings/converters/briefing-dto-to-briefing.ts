@@ -4,9 +4,15 @@ import { CreateBriefingDTO } from "../dto/create-briefing.dto";
 import { Asset } from "../entity/asset.entity";
 import { Briefing } from "../entity/briefing.entity";
 import { Converter } from "./converter.interface";
+import { AssetCreateDTO } from "../dto/asset-create.dto";
+import { AssetDTOToAssetConverter } from "./asset-dto-to-asset";
+import { AssetExtension } from "../entity/asset-extension.enum";
 
 @Injectable()
 export class BriefingDTOToBriefingConverter implements Converter<CreateBriefingDTO, Briefing>{
+
+    constructor(private readonly assetDTOToAssetConverter: AssetDTOToAssetConverter) { }
+
     public convert(createBriefingDTO: CreateBriefingDTO): Briefing {
         const briefing = new Briefing;
 
@@ -31,13 +37,16 @@ export class BriefingDTOToBriefingConverter implements Converter<CreateBriefingD
 
     public createFirstAssetForBriefing(briefing: Briefing): Asset {
 
-        const asset = new Asset();
+        const assetCreateDTO = new AssetCreateDTO();
 
-        asset.type = AssetType.CONTENT_IMAGE;
-        asset.scene = 1;
-        asset.camera = 1;
-        asset.variant = 1;
-        asset.sort_order = 1;
+        assetCreateDTO.variant = 1;
+        assetCreateDTO.camera = 1;
+        assetCreateDTO.type = AssetType.CONTENT_IMAGE;
+        assetCreateDTO.extension = AssetExtension.JPG;
+
+        const asset = this.assetDTOToAssetConverter.convertWithAdditionalAttributes(briefing, assetCreateDTO);
+
+        asset.briefing = null;
 
         return asset;
     }
