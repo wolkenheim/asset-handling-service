@@ -1,5 +1,4 @@
 import { AssetType } from "../entity/asset-type.enum";
-import { CreateAssetDTO } from "../dto/create-asset.dto";
 import { Converter } from "./converter.interface";
 import { CreateUploadDTO } from "../dto/create-upload.dto";
 import { Upload } from "../entity/upload.entity";

@@ -26,11 +26,14 @@ export class Asset {
     @Column()
     camera: number;
 
-    @Column()
+    @Column({ default: 1 })
     sort_order: number;
 
     @Column({ default: 1 })
     upload_counter: number
+
+    @Column({ default: null, nullable: true })
+    dam_asset_id: string
 
     @ManyToOne(type => Briefing)
     briefing: Briefing

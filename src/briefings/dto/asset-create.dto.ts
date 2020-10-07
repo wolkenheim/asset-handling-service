@@ -2,10 +2,10 @@ import { IsEnum, IsInt, IsNotEmpty } from 'class-validator';
 import { AssetExtension } from '../entity/asset-extension.enum';
 import { AssetType } from '../entity/asset-type.enum';
 
-export class CreateAssetDTO {
+export class AssetCreateDTO {
 
-    @IsInt()
-    scene: number;
+    @IsNotEmpty()
+    briefing_id: string;
 
     @IsInt()
     variant: number;

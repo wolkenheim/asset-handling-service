@@ -15,7 +15,6 @@ import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
 import { TestdataService } from './services/testdata.service';
 import { UploadRepository } from './repositories/upload.repository';
-import { PresignedController } from '../presigned/controllers/presigned.controller';
 import { AssetsController } from './controllers/assets.controller';
 import { AssetsService } from './services/assets.service';
 

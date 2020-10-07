@@ -1,36 +1,39 @@
 import { AssetType } from "../entity/asset-type.enum";
 import { AssetExtension } from "../entity/asset-extension.enum";
-import { CreateAssetDTO } from "../dto/create-asset.dto";
+import { AssetCreateDTO } from "../dto/asset-create.dto";
 import { Asset } from "../entity/asset.entity";
 import { Converter } from "./converter.interface";
 import { Briefing } from "../entity/briefing.entity";
 import { AssetNameHelper } from "../entity/asset-name.helper";
 
-export class AssetDTOToAssetConverter implements Converter<CreateAssetDTO, Asset> {
+export class AssetDTOToAssetConverter implements Converter<AssetCreateDTO, Asset> {
 
-    public convert(createAssetDTO: CreateAssetDTO): Asset {
+    public convert(assetCreateDTO: AssetCreateDTO): Asset {
 
         const asset = new Asset();
 
-        asset.type = AssetType.CONTENT_IMAGE;
-        asset.extension = AssetExtension.JPG;
-        asset.scene = createAssetDTO.scene;
-        asset.variant = createAssetDTO.variant;
-        asset.camera = createAssetDTO.camera;
-        asset.sort_order = null;
+        asset.type = assetCreateDTO.type ? assetCreateDTO.type : AssetType.CONTENT_IMAGE;
+        asset.extension = assetCreateDTO.extension ? assetCreateDTO.extension : AssetExtension.JPG;
+        asset.variant = assetCreateDTO.variant;
+        asset.camera = assetCreateDTO.camera;
 
         return asset;
     }
 
-    public convertWithAdditionalAttributes(briefing: Briefing, createAssetDTO: CreateAssetDTO): Asset {
+    public convertWithAdditionalAttributes(briefing: Briefing, createAssetDTO: AssetCreateDTO): Asset {
 
         const asset: Asset = this.convert(createAssetDTO);
-        const sortOrder = this.getNextSortOrderIndex(briefing.assets);
-        asset.sort_order = sortOrder;
+
+        asset.briefing = briefing;
+
+        asset.scene = briefing.scene;
+        asset.sort_order = this.getNextSortOrderIndex(briefing.assets);
+
         asset.setFilePath(new AssetNameHelper(briefing, asset).buildName())
 
         return asset;
     }
+
 
     protected getNextSortOrderIndex(assets: Asset[]): number {
         const arrayOfNumber = assets.map((asset: Asset) => asset.sort_order);
