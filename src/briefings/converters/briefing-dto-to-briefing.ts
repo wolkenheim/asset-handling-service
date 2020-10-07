@@ -46,8 +46,6 @@ export class BriefingDTOToBriefingConverter implements Converter<CreateBriefingD
 
         const asset = this.assetDTOToAssetConverter.convertWithAdditionalAttributes(briefing, assetCreateDTO);
 
-        asset.briefing = null;
-
         return asset;
     }
 
