@@ -2,12 +2,10 @@ import { readFile } from 'fs';
 import * as util from 'util';
 
 export class TestDataReader {
-    public async read() {
+    public async read(): Promise<{}[]> {
         let result = await this.readTestData();
         let briefings = JSON.parse(result);
-        let briefingParam = briefings[0];
-
-        return briefingParam;
+        return briefings;
     }
 
     protected async readTestData(): Promise<string> {

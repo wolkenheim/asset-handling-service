@@ -7,12 +7,13 @@ import { HealthController } from './health/health.controller';
 import { BullModule } from '@nestjs/bull';
 import { PresignedModule } from './presigned/presigned.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     TerminusModule,
     BriefingsModule,
-    PresignedModule
+    PresignedModule,
   ],
   controllers: [HealthController],
 })

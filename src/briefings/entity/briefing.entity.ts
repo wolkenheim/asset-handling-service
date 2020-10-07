@@ -40,7 +40,7 @@ export class Briefing {
     @Column({ default: 1 })
     scene: number
 
-    @OneToMany(type => Asset, asset => asset.briefing, { cascade: true, eager: true })
+    @OneToMany(type => Asset, asset => asset.briefing, { cascade: ["remove", "insert", "update"], eager: true })
     assets: Asset[]
 
 }

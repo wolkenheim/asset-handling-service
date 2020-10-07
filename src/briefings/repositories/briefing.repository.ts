@@ -12,7 +12,7 @@ export class BriefingRepository extends Repository<Briefing> {
 
 
     async getBriefings(): Promise<Briefing[]> {
-        return this.find({ relations: ["assets"] })
+        return await this.find({ relations: ["assets"] })
         /*
         const query = this.createQueryBuilder('briefing');
         query.relation('assets');

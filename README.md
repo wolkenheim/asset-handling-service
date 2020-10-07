@@ -18,6 +18,16 @@ Install npm dependencies
 $ npm install
 ```
 
+## Seed demo date in the application
+```
+npm run console:dev test-briefing:create
+```
+
+delete data
+```
+npm run console:dev test-briefing:create
+```
+
 ## Running the app
 
 ```bash

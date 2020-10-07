@@ -13,7 +13,6 @@ import { AssetRepository } from './repositories/asset.repository';
 import { UploadDTOToUploadConverter } from './converters/upload-dto-to-upload';
 import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
-import { TestdataService } from './services/testdata.service';
 import { UploadRepository } from './repositories/upload.repository';
 import { AssetsController } from './controllers/assets.controller';
 import { AssetsService } from './services/assets.service';
@@ -39,8 +38,8 @@ import { AssetsService } from './services/assets.service';
     BriefingDTOToBriefingConverter,
     UploadDTOToUploadConverter,
     UploadsService,
-    TestdataService,
-  ]
+  ],
+  exports: [BriefingsService, TypeOrmModule]
 })
 export class BriefingsModule {
   configure(consumer: MiddlewareConsumer) {

@@ -4,6 +4,7 @@ import { CreateBriefingDTO } from '../dto/create-briefing.dto';
 import { Briefing } from '../entity/briefing.entity';
 import { UniqueContraintException } from '../exceptions/unique-contraint.exception';
 import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing";
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BriefingsService {

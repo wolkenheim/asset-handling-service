@@ -2,7 +2,7 @@ import { Test } from "@nestjs/testing"
 import { plainToClass } from "class-transformer"
 import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing"
 import { CreateBriefingDTO } from "../dto/create-briefing.dto"
-import { TestDataReader } from "../test-helper/test-data-reader"
+import { TestDataReader } from "../../testdata/test-helper/test-data-reader"
 import { AssetNameHelper } from "./asset-name.helper"
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 
