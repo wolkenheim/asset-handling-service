@@ -4,15 +4,17 @@ import { BriefingRepository } from "../repositories/briefing.repository";
 import { BriefingsService } from "./briefings.service";
 import { TestDataReader } from "../../testdata/test-helper/test-data-reader";
 import { plainToClass } from "class-transformer";
+import { BriefingCreateDTO } from "../dto/briefing-create.dto";
+import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 
-jest.mock("../repositories/briefing.repository");
+//jest.mock("../repositories/briefing.repository");
 
 describe("BriefingsService", () => {
     let briefingsService: BriefingsService;
     let briefingRepository: BriefingRepository;
     let briefingDTOToBriefingConverter: BriefingDTOToBriefingConverter;
 
-    let result: Promise<Briefing[]> = null;
+
 
     const getOneTestBriefing = async () => {
         const briefingParam = await new TestDataReader().read();
@@ -20,21 +22,71 @@ describe("BriefingsService", () => {
         return briefingOne;
     }
 
+    const getOneTestBriefingCreateDTO = async () => {
+        const briefingParam = await new TestDataReader().read();
+        const briefingOne = plainToClass(BriefingCreateDTO, briefingParam[0]);
+        return briefingOne;
+    }
+
     beforeEach(async () => {
-        const testBriefing = await getOneTestBriefing();
         briefingRepository = new BriefingRepository();
+        briefingDTOToBriefingConverter = new BriefingDTOToBriefingConverter(new AssetDTOToAssetConverter());
         briefingsService = new BriefingsService(briefingRepository, briefingDTOToBriefingConverter);
-
-        result = new Promise((resolve, reject) => {
-            resolve([testBriefing]);
-        })
-
-        jest.spyOn(briefingRepository, 'getBriefings').mockImplementation(() => result);
     })
 
-    describe("findAll", () => {
+    describe("getBriefings", () => {
         it('should return a list of briefings', async () => {
-            expect(await briefingsService.getAllBriefings()).toBe(await result);
+            const testBriefing = await getOneTestBriefing();
+            let getBriefings: Promise<Briefing[]> = new Promise((resolve, reject) => {
+                resolve([testBriefing]);
+            })
+
+            jest.spyOn(briefingRepository, 'getBriefings').mockImplementation(() => getBriefings);
+            expect(await briefingsService.getAllBriefings()).toBe(await getBriefings);
+        })
+    })
+
+    describe("createBriefing", () => {
+        it('should throw an error when trying to insert a briefing with the same UUID twice', async () => {
+            const testBriefing = await getOneTestBriefing();
+            let briefingOneResult: Promise<Briefing> = new Promise((resolve, reject) => {
+                resolve(testBriefing);
+            })
+
+            let testBriefingCreateDTO = await getOneTestBriefingCreateDTO();
+
+            const spy = jest.spyOn(briefingRepository, 'findOne').mockImplementation(() => briefingOneResult);
+
+            try {
+                await briefingsService.createBriefing(testBriefingCreateDTO)
+            } catch (e) {
+                expect(spy).toHaveBeenCalled();
+                expect(e.message).toMatch('Briefing UUID already exists');
+            }
+        })
+
+        it('should create a new briefing', async () => {
+
+            let findOneResult: Promise<Briefing> = new Promise((resolve, reject) => {
+                resolve(undefined);
+            })
+
+            const testBriefing = await getOneTestBriefing();
+            let saveResult: Promise<Briefing> = new Promise((resolve, reject) => {
+                resolve(testBriefing);
+            })
+
+            let testBriefingCreateDTO = await getOneTestBriefingCreateDTO();
+
+            jest.spyOn(briefingRepository, 'findOne').mockImplementation(() => findOneResult);
+            let saveSpy = jest.spyOn(briefingRepository, 'save').mockImplementation(() => saveResult);
+
+            let createResult = await briefingsService.createBriefing(testBriefingCreateDTO)
+
+            expect(saveSpy).toHaveBeenCalled();
+            expect(createResult).toHaveProperty('id');
+            expect(createResult).toHaveProperty('team');
+
         })
     })
 
