@@ -1,18 +1,20 @@
 import { HttpStatus, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 import { AssetCreateDTO } from "../dto/asset-create.dto";
 import { AssetUpdateDTO } from "../dto/asset-update.dto";
 import { Asset } from "../entity/asset.entity";
 import { Briefing } from "../entity/briefing.entity";
 import { UniqueContraintException } from "../exceptions/unique-contraint.exception";
-import { AssetRepository } from "../repositories/asset.repository";
 import { BriefingsService } from "./briefings.service";
 
 @Injectable()
 export class AssetsService {
 
     constructor(
-        private readonly assetRepository: AssetRepository,
+        @InjectRepository(Asset)
+        private readonly assetRepository: Repository<Asset>,
         private readonly assetDTOToAssetConverter: AssetDTOToAssetConverter,
         private readonly briefingsService: BriefingsService,
     ) { }

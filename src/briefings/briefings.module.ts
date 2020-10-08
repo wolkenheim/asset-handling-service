@@ -9,13 +9,13 @@ import { AssetUploadsController } from './controllers/asset-uploads.controller';
 import { BriefingsApiController } from './controllers/briefings.api.controller';
 import { TokenMiddleware } from './middlewares/token.middleware';
 import { UploadsService } from './services/uploads.service';
-import { AssetRepository } from './repositories/asset.repository';
 import { UploadDTOToUploadConverter } from './converters/upload-dto-to-upload';
 import { BullModule } from '@nestjs/bull';
 import { UploadImageModule } from 'src/upload-image/upload-image.module';
 import { UploadRepository } from './repositories/upload.repository';
 import { AssetsController } from './controllers/assets.controller';
 import { AssetsService } from './services/assets.service';
+import { Asset } from './entity/asset.entity';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AssetsService } from './services/assets.service';
     BullModule.registerQueue({
       name: 'image',
     }),
-    TypeOrmModule.forFeature([BriefingRepository, AssetRepository, UploadRepository]),
+    TypeOrmModule.forFeature([BriefingRepository, Asset, UploadRepository]),
   ],
   controllers: [
     AssetsController,

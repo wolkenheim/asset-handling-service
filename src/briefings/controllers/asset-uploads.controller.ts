@@ -3,7 +3,7 @@ import { CreateUploadDTO } from '../dto/create-upload.dto';
 import { UploadsService } from '../services/uploads.service';
 
 
-@Controller('asset')
+@Controller('api/assets')
 export class AssetUploadsController {
 
     constructor(private readonly uploadsService: UploadsService) { }

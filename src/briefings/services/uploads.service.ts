@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UploadDTOToUploadConverter } from '../converters/upload-dto-to-upload';
 import { CreateUploadDTO } from '../dto/create-upload.dto';
-import { AssetRepository } from '../repositories/asset.repository';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { setQueues } from 'bull-board';
@@ -10,6 +9,8 @@ import { QueueNames } from 'src/upload-image/queue-names.enum';
 import { FileUploadService } from 'src/upload-image/services/file-upload.service';
 import { Upload } from '../entity/upload.entity';
 import { Asset } from '../entity/asset.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
@@ -18,7 +19,8 @@ export class UploadsService {
     constructor(
         @InjectQueue('image') private readonly imageQueue: Queue,
         private readonly fileService: FileServiceS3,
-        private readonly assetRepository: AssetRepository,
+        @InjectRepository(Asset)
+        private readonly assetRepository: Repository<Asset>,
         private readonly uploadDTOToUploadConverter: UploadDTOToUploadConverter,
         private readonly fileUploadService: FileUploadService
     ) {
@@ -38,7 +40,7 @@ export class UploadsService {
 
     async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string): Promise<Asset> {
 
-        await this.fileService.validateFileExists(createUploadDTO.hashedName);
+        //await this.fileService.validateFileExists(createUploadDTO.hashedName);
 
         let asset = await this.getAssetById(assetId);
 
@@ -51,21 +53,18 @@ export class UploadsService {
 
         let savedAsset = await this.assetRepository.save(asset);
 
-        await this.imageQueue.add(QueueNames.COPY, upload);
+        //await this.imageQueue.add(QueueNames.COPY, upload);
 
         return savedAsset;
     }
 
     async deleteExistingUploads(asset: Asset): Promise<Asset> {
-        const assetsToDelete = [...asset.uploads];
 
-        if (assetsToDelete.length > 0) {
-            asset.uploads.forEach((upload: Upload) => {
-                // @todo: remove image from s3
-                this.assetRepository.removeUpload(upload);
-            })
+        if (asset.uploads.length > 0) {
+            asset.uploads = [];
+            this.assetRepository.save(asset);
+
         }
-        asset.uploads = [];
         return asset;
     }
 
