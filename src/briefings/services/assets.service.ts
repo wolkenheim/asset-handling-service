@@ -20,8 +20,8 @@ export class AssetsService {
     ) { }
 
 
-    async updateAsset(id: string, assetUpdateDTO: AssetUpdateDTO) {
-        let foundAsset = await this.assetRepository.findOne(id, { relations: ['uploads'] });
+    async updateAsset(id: string, assetUpdateDTO: AssetUpdateDTO): Promise<Asset> {
+        const foundAsset = await this.assetRepository.findOne(id, { relations: ['uploads'] });
         if (!foundAsset) {
             throw new NotFoundException("Asset not found");
         }
@@ -36,7 +36,7 @@ export class AssetsService {
     }
 
     async findAsset(id: string): Promise<Asset> {
-        let foundAsset = await this.assetRepository.findOne(id);
+        const foundAsset = await this.assetRepository.findOne(id);
 
         if (!foundAsset) {
             throw new NotFoundException("Asset not found");

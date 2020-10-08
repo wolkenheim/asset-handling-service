@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBriefingDTO } from '../briefings/dto/create-briefing.dto';
+import { BriefingCreateDTO } from '../briefings/dto/briefing-create.dto';
 import { BriefingsService } from '../briefings/services/briefings.service';
 import { BriefingRepository } from '../briefings/repositories/briefing.repository';
 import { TestDataReader } from './test-helper/test-data-reader';
@@ -15,7 +15,7 @@ export class TestdataService {
 
     async createTestBriefings() {
 
-        let briefingParams = await new TestDataReader().read();
+        const briefingParams = await new TestDataReader().read();
         if (!briefingParams.length) return;
 
         await this.createOneBriefing(briefingParams[0])
@@ -32,33 +32,33 @@ export class TestdataService {
             return;
         }
 
-        const createBriefingDTO = this.hydrateDTO(briefingParam);
+        const briefingCreateDTO = this.hydrateDTO(briefingParam);
 
-        const briefing = await this.briefingsService.createBriefing(createBriefingDTO);
+        const briefing = await this.briefingsService.createBriefing(briefingCreateDTO);
 
     }
 
-    hydrateDTO(briefingParam: any): CreateBriefingDTO {
+    hydrateDTO(briefingParam: any): BriefingCreateDTO {
 
-        const createBriefingDTO = new CreateBriefingDTO();
+        const briefingCreateDTO = new BriefingCreateDTO();
 
-        createBriefingDTO.id = briefingParam.id;
-        createBriefingDTO.content_piece_id = briefingParam.content_piece_id;
-        createBriefingDTO.briefing_type = briefingParam.briefing_type;
-        createBriefingDTO.team = briefingParam.team;
-        createBriefingDTO.description = briefingParam.description;
-        createBriefingDTO.jira_ticket_title = briefingParam.jira_ticket_title;
-        createBriefingDTO.deadline = new Date(briefingParam.deadline);
-        createBriefingDTO.briefing_date = new Date(briefingParam.briefing_date);
-        createBriefingDTO.kw = briefingParam.kw;
-        createBriefingDTO.camera = briefingParam.camera;
-        createBriefingDTO.scene = briefingParam.scene;
+        briefingCreateDTO.id = briefingParam.id;
+        briefingCreateDTO.content_piece_id = briefingParam.content_piece_id;
+        briefingCreateDTO.briefing_type = briefingParam.briefing_type;
+        briefingCreateDTO.team = briefingParam.team;
+        briefingCreateDTO.description = briefingParam.description;
+        briefingCreateDTO.jira_ticket_title = briefingParam.jira_ticket_title;
+        briefingCreateDTO.deadline = new Date(briefingParam.deadline);
+        briefingCreateDTO.briefing_date = new Date(briefingParam.briefing_date);
+        briefingCreateDTO.kw = briefingParam.kw;
+        briefingCreateDTO.camera = briefingParam.camera;
+        briefingCreateDTO.scene = briefingParam.scene;
 
-        return createBriefingDTO;
+        return briefingCreateDTO;
     }
 
     async deleteTestBriefings() {
-        let briefingParams = await new TestDataReader().read();
+        const briefingParams = await new TestDataReader().read();
         if (!briefingParams.length) return;
 
         await this.deleteOneBriefing(briefingParams[0]["id"]);

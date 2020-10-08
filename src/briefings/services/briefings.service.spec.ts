@@ -2,8 +2,6 @@ import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-br
 import { Briefing } from "../entity/briefing.entity";
 import { BriefingRepository } from "../repositories/briefing.repository";
 import { BriefingsService } from "./briefings.service";
-import { getCustomRepository } from 'typeorm';
-import { mocked } from 'ts-jest/utils';
 import { TestDataReader } from "../../testdata/test-helper/test-data-reader";
 import { plainToClass } from "class-transformer";
 
@@ -16,14 +14,14 @@ describe("BriefingsService", () => {
 
     let result: Promise<Briefing[]> = null;
 
-    let getOneTestBriefing = async () => {
+    const getOneTestBriefing = async () => {
         const briefingParam = await new TestDataReader().read();
         const briefingOne = plainToClass(Briefing, briefingParam[0]);
         return briefingOne;
     }
 
     beforeEach(async () => {
-        let testBriefing = await getOneTestBriefing();
+        const testBriefing = await getOneTestBriefing();
         briefingRepository = new BriefingRepository();
         briefingsService = new BriefingsService(briefingRepository, briefingDTOToBriefingConverter);
 

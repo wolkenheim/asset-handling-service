@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AssetType } from "../entity/asset-type.enum";
-import { CreateBriefingDTO } from "../dto/create-briefing.dto";
+import { BriefingCreateDTO } from "../dto/briefing-create.dto";
 import { Asset } from "../entity/asset.entity";
 import { Briefing } from "../entity/briefing.entity";
 import { Converter } from "./converter.interface";
@@ -9,24 +9,24 @@ import { AssetDTOToAssetConverter } from "./asset-dto-to-asset";
 import { AssetExtension } from "../entity/asset-extension.enum";
 
 @Injectable()
-export class BriefingDTOToBriefingConverter implements Converter<CreateBriefingDTO, Briefing>{
+export class BriefingDTOToBriefingConverter implements Converter<BriefingCreateDTO, Briefing>{
 
     constructor(private readonly assetDTOToAssetConverter: AssetDTOToAssetConverter) { }
 
-    public convert(createBriefingDTO: CreateBriefingDTO): Briefing {
+    public convert(briefingCreateDTO: BriefingCreateDTO): Briefing {
         const briefing = new Briefing;
 
-        briefing.id = createBriefingDTO.id;
-        briefing.content_piece_id = createBriefingDTO.content_piece_id;
-        briefing.briefing_type = createBriefingDTO.briefing_type;
-        briefing.team = createBriefingDTO.team;
-        briefing.description = createBriefingDTO.description;
-        briefing.jira_ticket_title = createBriefingDTO.jira_ticket_title;
-        briefing.deadline = new Date(createBriefingDTO.deadline);
-        briefing.briefing_date = new Date(createBriefingDTO.briefing_date);
-        briefing.kw = createBriefingDTO.kw;
-        briefing.camera = createBriefingDTO.camera;
-        briefing.scene = createBriefingDTO.scene;
+        briefing.id = briefingCreateDTO.id;
+        briefing.content_piece_id = briefingCreateDTO.content_piece_id;
+        briefing.briefing_type = briefingCreateDTO.briefing_type;
+        briefing.team = briefingCreateDTO.team;
+        briefing.description = briefingCreateDTO.description;
+        briefing.jira_ticket_title = briefingCreateDTO.jira_ticket_title;
+        briefing.deadline = new Date(briefingCreateDTO.deadline);
+        briefing.briefing_date = new Date(briefingCreateDTO.briefing_date);
+        briefing.kw = briefingCreateDTO.kw;
+        briefing.camera = briefingCreateDTO.camera;
+        briefing.scene = briefingCreateDTO.scene;
 
         briefing.assets = [];
         const assetOne = this.createFirstAssetForBriefing(briefing);

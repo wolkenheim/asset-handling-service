@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsInt, ValidateNested, IsArray, IsUUID, IsDateString } from 'class-validator';
 
-export class CreateBriefingDTO {
+export class BriefingCreateDTO {
 
     @IsUUID()
     id: string;

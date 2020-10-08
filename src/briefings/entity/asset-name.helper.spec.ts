@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing"
 import { plainToClass } from "class-transformer"
 import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing"
-import { CreateBriefingDTO } from "../dto/create-briefing.dto"
+import { BriefingCreateDTO } from "../dto/briefing-create.dto"
 import { TestDataReader } from "../../testdata/test-helper/test-data-reader"
 import { AssetNameHelper } from "./asset-name.helper"
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
@@ -9,10 +9,10 @@ import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 describe('asset-name-test', () => {
     it('should succeed', async () => {
         const briefingParam = await new TestDataReader().read();
-        const createBriefingDTO = plainToClass(CreateBriefingDTO, briefingParam[0]);
+        const briefingCreateDTO = plainToClass(BriefingCreateDTO, briefingParam[0]);
 
         const assetDTOToAssetConverter = new AssetDTOToAssetConverter();
-        const briefing = new BriefingDTOToBriefingConverter(assetDTOToAssetConverter).convert(createBriefingDTO);
+        const briefing = new BriefingDTOToBriefingConverter(assetDTOToAssetConverter).convert(briefingCreateDTO);
 
         describe('it should include sub strings', () => {
             const assetName = new AssetNameHelper(briefing, briefing.assets[0]).buildName();

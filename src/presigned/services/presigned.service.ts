@@ -8,20 +8,20 @@ import { PresignedEntity } from '../entity/presigned.entity';
 export class PresignedService {
     constructor(private readonly fileService: FileServiceS3) { }
 
-    async getPresignedUrl(requestUrlDTO: RequestUrlDTO) {
+    async getPresignedUrl(requestUrlDTO: RequestUrlDTO): Promise<PresignedEntity> {
 
-        let filePath = requestUrlDTO.filePath.split('.').pop();
+        const filePath = requestUrlDTO.filePath.split('.').pop();
 
-        let hashedName = this.getHashedName(filePath);
+        const hashedName = this.getHashedName(filePath);
 
-        let preSignedUrl = await this.fileService.getSignedUrl(requestUrlDTO.filePath);
+        const preSignedUrl = await this.fileService.getSignedUrl(requestUrlDTO.filePath);
 
         return new PresignedEntity(hashedName, preSignedUrl, requestUrlDTO.filePath);
     }
 
     getHashedName(filePath: string): string {
-        let extension = filePath.split('.').pop();
-        let hashedName = uuidv4() + '.' + extension;
+        const extension = filePath.split('.').pop();
+        const hashedName = uuidv4() + '.' + extension;
 
         return hashedName;
     }

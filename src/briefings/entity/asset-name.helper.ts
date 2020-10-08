@@ -3,7 +3,7 @@ import { Briefing } from "./briefing.entity";
 
 export class AssetNameHelper {
 
-    private del: String = "_";
+    private del = "_";
     private methods: string[];
 
     constructor(
@@ -17,9 +17,9 @@ export class AssetNameHelper {
 
         let nameString = "";
 
-        let assetNameHelper = this;
+        const assetNameHelper = this;
         this.methods.forEach(method => {
-            let result = assetNameHelper[method]();
+            const result = assetNameHelper[method]();
             if (result) {
                 nameString += assetNameHelper[method]() + this.del;
             }
@@ -31,7 +31,7 @@ export class AssetNameHelper {
     }
 
     getOrderYear(): string | null {
-        let attribute = this.briefing.briefing_date;
+        const attribute = this.briefing.briefing_date;
         if (!attribute) {
             return null;
         }
@@ -39,7 +39,7 @@ export class AssetNameHelper {
     }
 
     getOrderMonth(): string | null {
-        let attribute = this.briefing.briefing_date;
+        const attribute = this.briefing.briefing_date;
         if (!attribute) {
             return null;
         }
@@ -47,7 +47,7 @@ export class AssetNameHelper {
     }
 
     getKW(): string | null {
-        let attribute = this.briefing.kw;
+        const attribute = this.briefing.kw;
         if (!attribute) {
             return null;
         }
@@ -55,7 +55,7 @@ export class AssetNameHelper {
     }
 
     getVariation(): string | null {
-        let attribute = this.asset.variant
+        const attribute = this.asset.variant
         if (!attribute) {
             return null;
         }
@@ -63,7 +63,7 @@ export class AssetNameHelper {
     }
 
     getCamera(): string | null {
-        let attribute = this.asset.camera
+        const attribute = this.asset.camera
         if (!attribute) {
             return null;
         }
@@ -72,7 +72,7 @@ export class AssetNameHelper {
 
     getJiraTicketTitle(): string | null {
         // @todo: truncate title
-        let attribute = this.briefing.jira_ticket_title
+        const attribute = this.briefing.jira_ticket_title
         if (!attribute) {
             return null;
         }
@@ -80,7 +80,7 @@ export class AssetNameHelper {
     }
 
     getScene(): string | null {
-        let attribute = this.asset.scene
+        const attribute = this.asset.scene
         if (!attribute) {
             return null;
         }

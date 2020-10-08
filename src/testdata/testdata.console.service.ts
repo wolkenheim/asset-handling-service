@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Console, Command, ConsoleService } from 'nestjs-console';
-import { BriefingRepository } from 'src/briefings/repositories/briefing.repository';
+import { ConsoleService } from 'nestjs-console';
 import { TestdataService } from './testdata.service';
 
 @Injectable()

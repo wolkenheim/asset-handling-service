@@ -1,16 +1,16 @@
 import { AssetType } from "../entity/asset-type.enum";
 import { Converter } from "./converter.interface";
-import { CreateUploadDTO } from "../dto/create-upload.dto";
+import { UploadCreateDTO } from "../dto/upload-create.dto";
 import { Upload } from "../entity/upload.entity";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
-export class UploadDTOToUploadConverter implements Converter<CreateUploadDTO, Upload> {
-    public convert(createUploadDTO: CreateUploadDTO): Upload {
+export class UploadDTOToUploadConverter implements Converter<UploadCreateDTO, Upload> {
+    public convert(uploadCreateDTO: UploadCreateDTO): Upload {
         const upload = new Upload();
 
-        upload.fileName = createUploadDTO.fileName;
-        upload.hashedName = createUploadDTO.hashedName;
+        upload.fileName = uploadCreateDTO.fileName;
+        upload.hashedName = uploadCreateDTO.hashedName;
 
         return upload;
     }

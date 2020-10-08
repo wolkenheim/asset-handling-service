@@ -12,14 +12,14 @@ export class FileUploadService {
     constructor(private readonly fileService: FileServiceS3) { }
 
     async uploadToDam() {
-        let fileName = 'me.jpg';
-        let localFilePath = './uploads/' + fileName;
-        let exists = fs.existsSync(localFilePath);
+        const fileName = 'me.jpg';
+        const localFilePath = './uploads/' + fileName;
+        const exists = fs.existsSync(localFilePath);
 
         //let result = await this.copyFromS3ToLocal(localFilePath);
 
 
-        let localReadStream = fs.createReadStream(localFilePath);
+        const localReadStream = fs.createReadStream(localFilePath);
         //let localReadStream = this.fileService.getReadStream('006581bf-47d4-404a-b681-796c878cc631.pdf');
 
         //let testWriteStream = fs.createWriteStream('./uploads/me_test.jpg');
@@ -30,9 +30,9 @@ export class FileUploadService {
     }
 
     async copyFromS3ToLocal(localFilePath: string): Promise<void> {
-        let file = fs.createWriteStream(localFilePath);
+        const file = fs.createWriteStream(localFilePath);
 
-        let readStream = this.fileService.getReadStream('006581bf-47d4-404a-b681-796c878cc631.pdf');
+        const readStream = this.fileService.getReadStream('006581bf-47d4-404a-b681-796c878cc631.pdf');
 
         readStream.pipe(file)
     }
@@ -45,11 +45,11 @@ export class FileUploadService {
         bodyFormData.append('Filedata', readStream);
         bodyFormData.append('assetPath', '/Client/Ztest/test/' + fileName);
 
-        let axiosInstance = await axiosDam();
+        const axiosInstance = await axiosDam();
 
 
         try {
-            let result = await axiosInstance({
+            const result = await axiosInstance({
                 method: 'POST',
                 url: createURL,
                 data: bodyFormData,

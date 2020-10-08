@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Param, UsePipes, ValidationPipe, Body } from '@nestjs/common';
-import { CreateUploadDTO } from '../dto/create-upload.dto';
+import { UploadCreateDTO } from '../dto/upload-create.dto';
 import { UploadsService } from '../services/uploads.service';
 
 
@@ -12,18 +12,18 @@ export class AssetUploadsController {
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
     async addUploadToAsset(
         @Param('assetId') assetId: string,
-        @Body() createUploadDTO: CreateUploadDTO
+        @Body() uploadCreateDTO: UploadCreateDTO
     ) {
-        return await this.uploadsService.addUploadToAsset(createUploadDTO, assetId);
+        return await this.uploadsService.addUploadToAsset(uploadCreateDTO, assetId);
     }
 
     @Post('/:assetId/update-upload')
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
     async updateUploadOnAsset(
         @Param('assetId') assetId: string,
-        @Body() createUploadDTO: CreateUploadDTO
+        @Body() uploadCreateDTO: UploadCreateDTO
     ) {
-        return await this.uploadsService.addUploadToAsset(createUploadDTO, assetId);
+        return await this.uploadsService.addUploadToAsset(uploadCreateDTO, assetId);
     }
 
     @Get('/test')

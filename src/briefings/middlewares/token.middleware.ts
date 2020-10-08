@@ -11,7 +11,7 @@ export class TokenMiddleware implements NestMiddleware {
             throw new MethodNotAllowedException("Not authenticated");
         }
 
-        let token = req.headers.authorization.split(" ")
+        const token = req.headers.authorization.split(" ")
         if (token.length !== 2 || token[1] !== config.token) {
             throw new MethodNotAllowedException("Not authenticated");
         }

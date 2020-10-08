@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 import { HealthCheck, HealthCheckService, MemoryHealthIndicator, TypeOrmHealthIndicator } from '@nestjs/terminus';
 
 @Controller('health')

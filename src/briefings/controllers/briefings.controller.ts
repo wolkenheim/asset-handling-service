@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BriefingsService } from '../services/briefings.service';
-import { CreateBriefingDTO } from '../dto/create-briefing.dto';
+import { BriefingCreateDTO } from '../dto/briefing-create.dto';
 import { Briefing } from '../entity/briefing.entity';
 
 @Controller('api/briefing')
@@ -20,8 +20,8 @@ export class BriefingsController {
 
     @Post()
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
-    async createBriefing(@Body() createBriefingDTO: CreateBriefingDTO): Promise<Briefing> {
-        return await this.briefingsService.createBriefing(createBriefingDTO);
+    async createBriefing(@Body() briefingCreateDTO: BriefingCreateDTO): Promise<Briefing> {
+        return await this.briefingsService.createBriefing(briefingCreateDTO);
     }
 
 }

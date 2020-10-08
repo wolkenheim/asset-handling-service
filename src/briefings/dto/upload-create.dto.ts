@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class CreateUploadDTO {
+export class UploadCreateDTO {
 
     @IsNotEmpty()
     fileName: string;

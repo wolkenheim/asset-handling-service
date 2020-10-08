@@ -1,7 +1,7 @@
 import axios from 'axios';
-let authToken = "xxx";
+const authToken = "xxx";
 async function axiosDam() {
-    let axiosInstance = axios.create({
+    const axiosInstance = axios.create({
         headers: {
             'Authorization': "Bearer " + authToken
         }

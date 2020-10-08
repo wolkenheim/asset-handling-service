@@ -16,15 +16,15 @@ export class UploadProcessor {
 
     @Process(QueueNames.COPY)
     async handleTranscode(job: Job<Upload>) {
-        let upload: Upload = job.data;
+        const upload: Upload = job.data;
         this.logger.debug('Start copying...');
         this.logger.debug(upload);
 
-        let result = await axios.get('http://localhost:3000/briefing');
+        const result = await axios.get('http://localhost:3000/briefing');
         //console.log(result.data)
 
 
-        let myObservable = this.httpService
+        const myObservable = this.httpService
             .get<Briefing[]>('http://localhost:3000/briefing')
             .pipe(map(result => {
                 return result.data;

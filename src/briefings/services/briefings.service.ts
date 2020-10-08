@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { BriefingRepository } from '../repositories/briefing.repository';
-import { CreateBriefingDTO } from '../dto/create-briefing.dto';
+import { BriefingCreateDTO } from '../dto/briefing-create.dto';
 import { Briefing } from '../entity/briefing.entity';
 import { UniqueContraintException } from '../exceptions/unique-contraint.exception';
 import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing";
@@ -28,15 +28,15 @@ export class BriefingsService {
         return foundBriefing;
     }
 
-    async createBriefing(createBriefingDTO: CreateBriefingDTO): Promise<Briefing> {
+    async createBriefing(briefingCreateDTO: BriefingCreateDTO): Promise<Briefing> {
 
-        const foundBriefing = await this.briefingRepository.findOne(createBriefingDTO.id, { relations: ["assets"] });
+        const foundBriefing = await this.briefingRepository.findOne(briefingCreateDTO.id, { relations: ["assets"] });
 
         if (foundBriefing) {
             throw new UniqueContraintException('Briefing UUID already exists', HttpStatus.BAD_REQUEST);
         }
 
-        const briefing = this.briefingDTOToBriefingConverter.convert(createBriefingDTO);
+        const briefing = this.briefingDTOToBriefingConverter.convert(briefingCreateDTO);
 
         return this.briefingRepository.createBriefingWithAssets(briefing);
     }

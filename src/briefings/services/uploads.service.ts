@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UploadDTOToUploadConverter } from '../converters/upload-dto-to-upload';
-import { CreateUploadDTO } from '../dto/create-upload.dto';
+import { UploadCreateDTO } from '../dto/upload-create.dto';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { setQueues } from 'bull-board';
@@ -26,7 +26,7 @@ export class UploadsService {
         this.registerQueuesIntoBullBoard();
     }
 
-    async getAssetById(assetId: string) {
+    async getAssetById(assetId: string): Promise<Asset> {
 
         const asset = await this.assetRepository.findOne(assetId);
 
@@ -37,22 +37,22 @@ export class UploadsService {
         return asset;
     }
 
-    async addUploadToAsset(createUploadDTO: CreateUploadDTO, assetId: string): Promise<Asset> {
+    async addUploadToAsset(uploadCreateDTO: UploadCreateDTO, assetId: string): Promise<Asset> {
 
-        //await this.fileService.validateFileExists(createUploadDTO.hashedName);
+        await this.fileService.validateFileExists(uploadCreateDTO.hashedName);
 
         let asset = await this.getAssetById(assetId);
 
         asset = await this.deleteExistingUploads(asset);
 
-        const upload = this.uploadDTOToUploadConverter.convert(createUploadDTO);
+        const upload = this.uploadDTOToUploadConverter.convert(uploadCreateDTO);
         asset.uploads.push(upload);
 
         asset.upload_counter++;
 
-        let savedAsset = await this.assetRepository.save(asset);
+        const savedAsset = await this.assetRepository.save(asset);
 
-        //await this.imageQueue.add(QueueNames.COPY, upload);
+        await this.imageQueue.add(QueueNames.COPY, upload);
 
         return savedAsset;
     }
@@ -62,7 +62,6 @@ export class UploadsService {
         if (asset.uploads.length > 0) {
             asset.uploads = [];
             this.assetRepository.save(asset);
-
         }
         return asset;
     }
@@ -71,7 +70,7 @@ export class UploadsService {
         await this.fileUploadService.uploadToDam();
     }
 
-    private registerQueuesIntoBullBoard() {
+    private registerQueuesIntoBullBoard(): void {
         setQueues([
             this.imageQueue
         ]);
