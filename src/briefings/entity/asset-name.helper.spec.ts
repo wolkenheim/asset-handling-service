@@ -9,7 +9,7 @@ import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 describe('asset-name-test', () => {
     it('should succeed', async () => {
         const briefingParam = await new TestDataReader().read();
-        const createBriefingDTO = plainToClass(CreateBriefingDTO, briefingParam);
+        const createBriefingDTO = plainToClass(CreateBriefingDTO, briefingParam[0]);
 
         const assetDTOToAssetConverter = new AssetDTOToAssetConverter();
         const briefing = new BriefingDTOToBriefingConverter(assetDTOToAssetConverter).convert(createBriefingDTO);

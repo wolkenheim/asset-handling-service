@@ -7,7 +7,6 @@ import { setQueues } from 'bull-board';
 import { FileServiceS3 } from 'src/upload-image/services/file.service.s3';
 import { QueueNames } from 'src/upload-image/queue-names.enum';
 import { FileUploadService } from 'src/upload-image/services/file-upload.service';
-import { Upload } from '../entity/upload.entity';
 import { Asset } from '../entity/asset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
