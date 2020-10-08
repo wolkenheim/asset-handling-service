@@ -7,8 +7,6 @@ import { plainToClass } from "class-transformer";
 import { BriefingCreateDTO } from "../dto/briefing-create.dto";
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 
-//jest.mock("../repositories/briefing.repository");
-
 describe("BriefingsService", () => {
     let briefingsService: BriefingsService;
     let briefingRepository: BriefingRepository;
@@ -40,8 +38,7 @@ describe("BriefingsService", () => {
             let getBriefings: Promise<Briefing[]> = new Promise((resolve, reject) => {
                 resolve([testBriefing]);
             })
-
-            jest.spyOn(briefingRepository, 'getBriefings').mockImplementation(() => getBriefings);
+            briefingRepository.getBriefings = jest.fn(() => getBriefings);
             expect(await briefingsService.getAllBriefings()).toBe(await getBriefings);
         })
     })
