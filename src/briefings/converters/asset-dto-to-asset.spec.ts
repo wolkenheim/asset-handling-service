@@ -25,7 +25,7 @@ describe("test converter", () => {
         expect(asset).toHaveProperty('type');
         expect(asset).toHaveProperty('extension');
         expect(asset).toHaveProperty('variant');
-        expect(asset).toHaveProperty('camera');
+        expect(asset).toHaveProperty('camera'); 2
 
         expect(asset.type).toEqual(AssetType.PRODUCT_IMAGE);
         expect(asset.extension).toEqual(AssetExtension.PNG);

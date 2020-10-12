@@ -3,12 +3,13 @@ import { plainToClass } from "class-transformer"
 import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-briefing"
 import { BriefingCreateDTO } from "../dto/briefing-create.dto"
 import { TestDataReader } from "../../testdata/test-helper/test-data-reader"
+import { JsonParser, testBriefingJSON } from "../../testdata/test-helper/json-parser";
 import { AssetNameHelper } from "./asset-name.helper"
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
 
 describe('asset-name-test', () => {
     it('should succeed', async () => {
-        const briefingParam = await new TestDataReader().read();
+        const briefingParam: testBriefingJSON = await new JsonParser(new TestDataReader()).parse()
         const briefingCreateDTO = plainToClass(BriefingCreateDTO, briefingParam[0]);
 
         const assetDTOToAssetConverter = new AssetDTOToAssetConverter();

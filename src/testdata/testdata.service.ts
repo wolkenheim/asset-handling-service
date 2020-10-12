@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BriefingCreateDTO } from '../briefings/dto/briefing-create.dto';
 import { BriefingsService } from '../briefings/services/briefings.service';
 import { BriefingRepository } from '../briefings/repositories/briefing.repository';
 import { TestDataReader } from './test-helper/test-data-reader';
+import { JsonParser, testBriefingJSON } from './test-helper/json-parser';
 
 @Injectable()
 export class TestdataService {
@@ -15,8 +16,7 @@ export class TestdataService {
 
     async createTestBriefings() {
 
-        const briefingParams = await new TestDataReader().read();
-        if (!briefingParams.length) return;
+        const briefingParams = await this.fetchTestBriefingsOrFail();
 
         await this.createOneBriefing(briefingParams[0])
         await this.createOneBriefing(briefingParams[1])
@@ -58,8 +58,7 @@ export class TestdataService {
     }
 
     async deleteTestBriefings() {
-        const briefingParams = await new TestDataReader().read();
-        if (!briefingParams.length) return;
+        const briefingParams = await this.fetchTestBriefingsOrFail();
 
         await this.deleteOneBriefing(briefingParams[0]["id"]);
         await this.deleteOneBriefing(briefingParams[1]["id"]);
@@ -74,6 +73,14 @@ export class TestdataService {
             await this.briefingRepository.remove(briefingExisting);
             return;
         }
+    }
+
+    async fetchTestBriefingsOrFail(): Promise<testBriefingJSON> {
+        const briefingParams = await new JsonParser(new TestDataReader()).parse()
+        if (!briefingParams.length) {
+            throw new NotFoundException("Test briefings are empty");
+        }
+        return briefingParams;
     }
 
 }

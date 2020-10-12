@@ -6,6 +6,7 @@ import { TestDataReader } from "../../testdata/test-helper/test-data-reader";
 import { plainToClass } from "class-transformer";
 import { BriefingCreateDTO } from "../dto/briefing-create.dto";
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
+import { JsonParser, testBriefingJSON } from "../../testdata/test-helper/json-parser";
 
 describe("BriefingsService", () => {
     let briefingsService: BriefingsService;
@@ -13,15 +14,14 @@ describe("BriefingsService", () => {
     let briefingDTOToBriefingConverter: BriefingDTOToBriefingConverter;
 
 
-
     const getOneTestBriefing = async () => {
-        const briefingParam = await new TestDataReader().read();
+        const briefingParam: testBriefingJSON = await new JsonParser(new TestDataReader()).parse()
         const briefingOne = plainToClass(Briefing, briefingParam[0]);
         return briefingOne;
     }
 
     const getOneTestBriefingCreateDTO = async () => {
-        const briefingParam = await new TestDataReader().read();
+        const briefingParam: testBriefingJSON = await new JsonParser(new TestDataReader()).parse()
         const briefingOne = plainToClass(BriefingCreateDTO, briefingParam[0]);
         return briefingOne;
     }

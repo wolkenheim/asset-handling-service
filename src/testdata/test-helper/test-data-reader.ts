@@ -1,16 +1,15 @@
 import { readFile } from 'fs';
 import * as util from 'util';
+import { DataReader } from './data-reader.interface';
 
-export class TestDataReader {
-    public async read(): Promise<{ [key: string]: string }[]> {
-        const result = await this.readTestData();
-        const briefings = JSON.parse(result);
-        return briefings;
-    }
+export class TestDataReader implements DataReader {
+    data: string = "";
+    filename: string = 'testdata/briefings.json'
 
-    protected async readTestData(): Promise<string> {
+    constructor() { }
+
+    public async read(): Promise<void> {
         const readFileAsync = util.promisify(readFile);
-        const result = await readFileAsync('testdata/briefings.json', 'utf8');
-        return result;
+        this.data = await readFileAsync(this.filename, 'utf8');
     }
 }
