@@ -11,4 +11,4 @@ async function axiosDam() {
 }
 
 
-export { axiosDam };
+export { axiosDam }

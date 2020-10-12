@@ -87,6 +87,14 @@ export class AssetNameHelper {
         return "Scene_" + attribute.toString().padStart(2, '0');
     }
 
+    getHash(): string | null {
+        const attribute = this.asset.hash
+        if (!attribute) {
+            return null;
+        }
+        return attribute
+    }
+
     setMethods(methods?: string[]): void {
         if (!methods) {
             methods = [
@@ -96,6 +104,7 @@ export class AssetNameHelper {
                 'getVariation',
                 'getCamera',
                 'getJiraTicketTitle',
+                'getHash',
                 'getScene'
             ];
         }

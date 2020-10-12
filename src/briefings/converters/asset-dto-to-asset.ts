@@ -30,6 +30,7 @@ export class AssetDTOToAssetConverter implements Converter<AssetCreateDTO, Asset
         asset.sort_order = this.getNextSortOrderIndex(briefing.assets);
         asset.file_name = new AssetNameHelper(briefing, asset).buildName();
 
+
         return asset;
     }
 

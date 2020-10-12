@@ -30,6 +30,4 @@ export class AssetUploadsController {
     async testS3() {
         return await this.uploadsService.testS3();
     }
-
-
 }

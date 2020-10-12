@@ -1,9 +1,10 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, AfterLoad, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, AfterLoad, CreateDateColumn, UpdateDateColumn, BeforeInsert } from "typeorm";
 import { AssetType } from "./asset-type.enum";
 import { AssetExtension } from "./asset-extension.enum";
 import { Briefing } from "./briefing.entity";
 import { Upload } from "./upload.entity";
 import { Exclude } from "class-transformer";
+
 
 @Entity()
 export class Asset {
@@ -50,6 +51,10 @@ export class Asset {
     @UpdateDateColumn()
     updatedDate: Date;
 
+    @Column({ default: null, nullable: true })
+    hash: string
+
+
     protected file_path: string
 
     setFilePath(filePath: string) {
@@ -59,5 +64,12 @@ export class Asset {
     @AfterLoad()
     initFilePath() {
         this.setFilePath(this.file_name + "." + this.extension);
+    }
+
+    @BeforeInsert()
+    initHash() {
+        if (this.hash == null) {
+            this.hash = new Date().getTime().toString();
+        }
     }
 }
