@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn, CreateDateColumn, UpdateDateColumn, AfterLoad } from "typeorm";
 import { Asset } from "./asset.entity";
 import { Type } from 'class-transformer';
 
@@ -43,4 +43,22 @@ export class Briefing {
     @OneToMany(type => Asset, asset => asset.briefing, { cascade: ["remove", "insert", "update"], eager: true })
     assets: Asset[]
 
+    @CreateDateColumn()
+    createdDate: Date;
+
+    @UpdateDateColumn()
+    updatedDate: Date;
+
+
+    @AfterLoad()
+    orderAssets() {
+
+        if (!this.assets || this.assets.length < 2) {
+            return;
+        }
+
+        this.assets.sort((a, b) => {
+            return new Date(a.createdDate).getTime() > new Date(b.createdDate).getTime() ? 1 : -1;
+        });
+    }
 }

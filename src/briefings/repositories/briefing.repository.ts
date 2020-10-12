@@ -13,12 +13,16 @@ export class BriefingRepository extends Repository<Briefing> {
 
     async getBriefings(): Promise<Briefing[]> {
         return await this.find({ relations: ["assets"] })
+
         /*
         const query = this.createQueryBuilder('briefing');
-        query.relation('assets');
+        //query.relation('assets');
+        query.leftJoinAndSelect('briefing.assets', 'asset')
+            .orderBy('asset.createdDate', 'DESC')
         const briefings = await query.getMany();
         return briefings;
         */
+
     }
 
     async deleteAsset(assetId: string): Promise<void> {

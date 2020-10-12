@@ -14,7 +14,7 @@ export class PresignedService {
 
         const hashedName = this.getHashedName(filePath);
 
-        const preSignedUrl = await this.fileService.getSignedUrl(requestUrlDTO.filePath);
+        const preSignedUrl = await this.fileService.getSignedUrl(hashedName);
 
         return new PresignedEntity(hashedName, preSignedUrl, requestUrlDTO.filePath);
     }

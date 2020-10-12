@@ -2,11 +2,10 @@ import { readFile } from 'fs';
 import * as util from 'util';
 import { DataReader } from './data-reader.interface';
 
-export class TestDataReader implements DataReader {
+export class DataReaderImpl implements DataReader {
     data: string = "";
-    filename: string = 'testdata/briefings.json'
 
-    constructor() { }
+    constructor(protected filename: string) { }
 
     public async read(): Promise<void> {
         const readFileAsync = util.promisify(readFile);

@@ -8,7 +8,7 @@ export class AssetUploadsController {
 
     constructor(private readonly uploadsService: UploadsService) { }
 
-    @Post('/:assetId/add-upload')
+    @Post('/:assetId/create-upload')
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
     async addUploadToAsset(
         @Param('assetId') assetId: string,

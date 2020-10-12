@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, AfterLoad } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany, JoinColumn, AfterLoad, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { AssetType } from "./asset-type.enum";
 import { AssetExtension } from "./asset-extension.enum";
 import { Briefing } from "./briefing.entity";
@@ -43,6 +43,12 @@ export class Asset {
 
     @Column({ default: null, nullable: true })
     file_name: string
+
+    @CreateDateColumn()
+    createdDate: Date;
+
+    @UpdateDateColumn()
+    updatedDate: Date;
 
     protected file_path: string
 

@@ -3,8 +3,8 @@ import { IsNotEmpty } from 'class-validator';
 export class UploadCreateDTO {
 
     @IsNotEmpty()
-    fileName: string;
+    file_name: string;
 
     @IsNotEmpty()
-    hashedName: string;
+    hashed_name: string;
 }

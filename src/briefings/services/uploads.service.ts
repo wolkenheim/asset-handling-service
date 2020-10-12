@@ -39,7 +39,7 @@ export class UploadsService {
 
     async addUploadToAsset(uploadCreateDTO: UploadCreateDTO, assetId: string): Promise<Asset> {
 
-        await this.fileService.validateFileExists(uploadCreateDTO.hashedName);
+        await this.fileService.validateFileExists(uploadCreateDTO.hashed_name);
 
         let asset = await this.getAssetById(assetId);
 

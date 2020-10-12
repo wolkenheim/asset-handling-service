@@ -9,8 +9,8 @@ export class UploadDTOToUploadConverter implements Converter<UploadCreateDTO, Up
     public convert(uploadCreateDTO: UploadCreateDTO): Upload {
         const upload = new Upload();
 
-        upload.fileName = uploadCreateDTO.fileName;
-        upload.hashedName = uploadCreateDTO.hashedName;
+        upload.fileName = uploadCreateDTO.file_name;
+        upload.hashedName = uploadCreateDTO.hashed_name;
 
         return upload;
     }

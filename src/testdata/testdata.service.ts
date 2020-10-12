@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BriefingCreateDTO } from '../briefings/dto/briefing-create.dto';
 import { BriefingsService } from '../briefings/services/briefings.service';
 import { BriefingRepository } from '../briefings/repositories/briefing.repository';
-import { TestDataReader } from './test-helper/test-data-reader';
-import { JsonParser, testBriefingJSON } from './test-helper/json-parser';
+import { testBriefingJSON } from './test-helper/json-parser';
+import { TestDataClient } from "../testdata/test-helper/test-data-client";
 
 @Injectable()
 export class TestdataService {
@@ -76,7 +76,7 @@ export class TestdataService {
     }
 
     async fetchTestBriefingsOrFail(): Promise<testBriefingJSON> {
-        const briefingParams = await new JsonParser(new TestDataReader()).parse()
+        const briefingParams = await TestDataClient.getTestData();
         if (!briefingParams.length) {
             throw new NotFoundException("Test briefings are empty");
         }

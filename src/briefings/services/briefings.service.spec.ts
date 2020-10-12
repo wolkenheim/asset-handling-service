@@ -2,11 +2,11 @@ import { BriefingDTOToBriefingConverter } from "../converters/briefing-dto-to-br
 import { Briefing } from "../entity/briefing.entity";
 import { BriefingRepository } from "../repositories/briefing.repository";
 import { BriefingsService } from "./briefings.service";
-import { TestDataReader } from "../../testdata/test-helper/test-data-reader";
 import { plainToClass } from "class-transformer";
 import { BriefingCreateDTO } from "../dto/briefing-create.dto";
 import { AssetDTOToAssetConverter } from "../converters/asset-dto-to-asset";
-import { JsonParser, testBriefingJSON } from "../../testdata/test-helper/json-parser";
+import { testBriefingJSON } from "../../testdata/test-helper/json-parser";
+import { TestDataClient } from '../../testdata/test-helper/test-data-client';
 
 describe("BriefingsService", () => {
     let briefingsService: BriefingsService;
@@ -15,13 +15,13 @@ describe("BriefingsService", () => {
 
 
     const getOneTestBriefing = async () => {
-        const briefingParam: testBriefingJSON = await new JsonParser(new TestDataReader()).parse()
+        const briefingParam: testBriefingJSON = await TestDataClient.getTestData();
         const briefingOne = plainToClass(Briefing, briefingParam[0]);
         return briefingOne;
     }
 
     const getOneTestBriefingCreateDTO = async () => {
-        const briefingParam: testBriefingJSON = await new JsonParser(new TestDataReader()).parse()
+        const briefingParam: testBriefingJSON = await TestDataClient.getTestData();
         const briefingOne = plainToClass(BriefingCreateDTO, briefingParam[0]);
         return briefingOne;
     }

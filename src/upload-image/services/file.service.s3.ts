@@ -17,7 +17,6 @@ export class FileServiceS3 implements FileService {
 
         try {
             const headCode = await s3.headObject(params).promise();
-            //const signedUrl = s3.getSignedUrl('getObject', params);
             return true;
         } catch (headErr) {
             if (headErr.code === 'NotFound') {

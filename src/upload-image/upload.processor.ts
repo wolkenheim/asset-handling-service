@@ -20,10 +20,11 @@ export class UploadProcessor {
         this.logger.debug('Start copying...');
         this.logger.debug(upload);
 
-        const result = await axios.get('http://localhost:3000/briefing');
+        //const result = await axios.get('http://localhost:3001/services/create');
         //console.log(result.data)
 
 
+        /*
         const myObservable = this.httpService
             .get<Briefing[]>('http://localhost:3000/briefing')
             .pipe(map(result => {
@@ -40,6 +41,7 @@ export class UploadProcessor {
                 error: err => console.error('Observer got an error: ' + err),
                 complete: () => console.log('Observer got a complete notification'),
             });
+            */
 
 
         job.progress(100);
